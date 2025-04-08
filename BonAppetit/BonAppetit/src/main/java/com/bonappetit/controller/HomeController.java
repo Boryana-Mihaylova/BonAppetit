@@ -49,22 +49,24 @@ public class HomeController {
 
         Map<CategoryName, List<Recipe>> allRecipes = recipeService.findAllByCategory();
 
+        List<RecipeInfoDTO> favourites = userService.findFavourites(userSession.id())
+                .stream().map(RecipeInfoDTO::new).toList();
 
-//        List<RecipeInfoDTO> favourites = userService.findFavourites(userSession.id())
-//                .stream().map(RecipeInfoDTO::new).toList();
-//
+
         List<RecipeInfoDTO> cocktails = allRecipes.get(CategoryName.COCKTAIL).stream().map(RecipeInfoDTO::new).toList();
 
         List<RecipeInfoDTO> mainDishes = allRecipes.get(CategoryName.MAIN_DISH).stream().map(RecipeInfoDTO::new).toList();
 
         List<RecipeInfoDTO> desserts = allRecipes.get(CategoryName.DESSERT).stream().map(RecipeInfoDTO::new).toList();
-//
+
         model.addAttribute("cocktailsData", cocktails);
         model.addAttribute("mainDishesData", mainDishes);
         model.addAttribute("dessertsData", desserts);
-//        model.addAttribute("favouritesData", favourites);
+        model.addAttribute("favouritesData", favourites);
 
 
         return "home";
     }
+
+
 }

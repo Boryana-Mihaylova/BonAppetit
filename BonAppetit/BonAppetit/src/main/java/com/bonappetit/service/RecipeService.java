@@ -9,12 +9,10 @@ import com.bonappetit.model.entity.User;
 import com.bonappetit.repo.CategoryRepository;
 import com.bonappetit.repo.RecipeRepository;
 import com.bonappetit.repo.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecipeService {
@@ -81,5 +79,33 @@ public class RecipeService {
         return result;
     }
 
+    @Transactional
+    public void addToFavourites(Long id, long recipeId) {
+
+
+        Optional<User> userOpt = userRepository.findById(id);
+
+        if (userOpt.isEmpty()){
+            return;
+        }
+
+        Optional<Recipe> recipeOpt = recipeRepository.findById(recipeId);
+
+        if (recipeOpt.isEmpty()){
+            return;
+        }
+
+        User user = userOpt.get();
+        Recipe recipe = recipeOpt.get();
+
+
+        if (user.getFavouriteRecipes().contains(recipe)) {
+            return;
+        }
+
+        user.addFavourite(recipe);
+
+        userRepository.save(user);
+    }
 
 }

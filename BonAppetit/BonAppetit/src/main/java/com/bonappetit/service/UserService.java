@@ -3,11 +3,16 @@ package com.bonappetit.service;
 import com.bonappetit.config.UserSession;
 import com.bonappetit.model.dto.UserLoginDTO;
 import com.bonappetit.model.dto.UserRegisterDTO;
+import com.bonappetit.model.entity.Recipe;
 import com.bonappetit.model.entity.User;
 import com.bonappetit.repo.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,5 +68,13 @@ public class UserService {
         userSession.login(byUsername.get().getId(), data.getUsername());
 
         return true;
+    }
+
+
+    public List<Recipe> findFavourites(Long id) {
+
+       return userRepository.findById(id).map(u -> u.getFavouriteRecipes()).orElseGet(() -> new ArrayList<>());
+
+
     }
 }

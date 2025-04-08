@@ -103,4 +103,16 @@ public class UserController {
         return "redirect:/home";
 
     }
+
+    @GetMapping("/logout")
+    public String logout(){
+
+        if (!userSession.isLoggedIn()){
+            return "redirect:/";
+        }
+
+        userSession.logout();
+
+        return "redirect:/";
+    }
 }
