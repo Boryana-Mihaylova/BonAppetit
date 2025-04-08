@@ -1,6 +1,9 @@
 package com.bonappetit.model.entity;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -19,7 +22,19 @@ public class User {
     private String email;
 
 
+    @OneToMany(mappedBy = "addedBy")
+    private List<Recipe> addedRecipes;
 
+    @ManyToMany
+    private List<Recipe> favouriteRecipes;
+
+
+
+    public User() {
+        this.addedRecipes = new ArrayList<>();
+        this.favouriteRecipes = new ArrayList<>();
+
+    }
 
     public long getId() {
         return id;
@@ -53,5 +68,19 @@ public class User {
         this.email = email;
     }
 
+    public List<Recipe> getAddedRecipes() {
+        return addedRecipes;
+    }
 
+    public void setAddedRecipes(List<Recipe> addedRecipes) {
+        this.addedRecipes = addedRecipes;
+    }
+
+    public List<Recipe> getFavouriteRecipes() {
+        return favouriteRecipes;
+    }
+
+    public void setFavouriteRecipes(List<Recipe> favouriteRecipes) {
+        this.favouriteRecipes = favouriteRecipes;
+    }
 }

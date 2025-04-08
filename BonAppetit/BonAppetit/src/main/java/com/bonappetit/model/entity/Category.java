@@ -33,10 +33,11 @@ public class Category {
 
     public Category(CategoryName name, String description) {
         this();
-
         this.name = name;
         this.description = description;
     }
+
+
 
     public long getId() {
         return id;
