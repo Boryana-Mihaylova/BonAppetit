@@ -24,6 +24,8 @@ public class UserSession {
         return username;
     }
 
+
+
     public boolean isLoggedIn(){
         return id > 0;
     }
